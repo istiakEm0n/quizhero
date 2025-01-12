@@ -13,7 +13,15 @@ exports.getAllQuestions = async (req, res) => {
 exports.getQuestionById = async (req, res) => {
     try {
         const question = await questionService.getQuestionById(req.params.id);
-        res.json(question); // Respond with the list of questions
+        if(question){
+            res.json(question);
+            return;
+        }
+        
+        res.status(404).json({
+            success: false,
+            message: "Resource not found",
+        });
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error');
