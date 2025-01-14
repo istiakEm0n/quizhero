@@ -1,14 +1,13 @@
 const express = require('express');
 const questionRoutes = require('./routes/questionRoutes');
+const userRouters = require('./routes/userRoutes')
 
 const app = express();
 const port = 3000;
-
-// Middleware to parse JSON payloads
 app.use(express.json());
 
-// Set up routes
-app.use('/questions', questionRoutes);
+app.use('/quizhero', questionRoutes);
+app.use('/user', userRouters);
 
 // Start the server
 app.listen(port, () => {

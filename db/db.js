@@ -8,11 +8,18 @@ const pool = new Pool({
     password: '9B2NzPQMOJAk',
     port: 5432,
     ssl: {
-        rejectUnauthorized: false // Disable SSL certificate validation (for development)
+        rejectUnauthorized: false 
     }
 });
-
-// Export the query method for database interactions
+const close = async () => {
+    try {
+        await pool.end();
+        console.log('Database connection pool closed.');
+    } catch (error) {
+        console.error('Error closing database connection pool:', error.message);
+        throw error;
+    }
+};
 module.exports = {
     query: (text, params) => pool.query(text, params),
 };
