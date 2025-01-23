@@ -1,15 +1,14 @@
 const { Pool } = require('pg');
-
-// PostgreSQL connection pool
+require('dotenv').config(); 
 const pool = new Pool({
-    user: 'quizhero_owner',
-    host: 'ep-super-silence-a1qlrjwf.ap-southeast-1.aws.neon.tech',
-    database: 'quizhero',
-    password: '9B2NzPQMOJAk',
-    port: 5432,
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
     ssl: {
-        rejectUnauthorized: false 
-    }
+        rejectUnauthorized: process.env.DB_SSL_REJECT_UNAUTHORIZED === 'true', 
+    },
 });
 const close = async () => {
     try {
