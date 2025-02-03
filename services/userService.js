@@ -1,19 +1,24 @@
-const db = require('../db/db')
 
-exports.registerUser= async(userId, userName) =>{
-    try{
-        const existingUserQuery = 'SELECT * FROM users WHERE user_id = $1';
-    const existingUserResult = await db.query(existingUserQuery, [userId]);
-    if(existingUserResult.rows.length > 0){
-        throw new Error('User aready exists');
-        
-    }
-    const insertUserQuery = 'INSERT INTO users (user_id, username) VALUES ($1, $2) RETURNING *';
-        const newUserResult = await db.query(insertUserQuery, [userId, userName]);
+const db = require('../db/db');
+const { v4: uuidv4 } = require('uuid'); // Generates unique UUID for user_id
 
-        return newUserResult.rows[0];
+exports.registerUser = async (userName) => {
+    try {
+        const userId = uuidv4();
+
+        const checkUser = await db.query('SELECT * FROM users WHERE user_name = $1', [userName]);
+        if (checkUser.rows.length > 0) {
+            throw new Error('Username already taken');
+        }
+
+        const result = await db.query(
+            'INSERT INTO users (user_id, user_name) VALUES ($1, $2) RETURNING *',
+            [userId, userName]
+        );
+
+        return result.rows[0]; // Return the new user details
+    } catch (error) {
+        console.error('Error registering user:', error.message);
+        throw new Error(error.message);
     }
-    catch (error) {
-        throw new Error(`Error registering user: ${error.message}`);
-    }
-}
+};

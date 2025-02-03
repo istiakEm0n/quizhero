@@ -7,7 +7,7 @@ const port = 3000;
 app.use(express.json());
 
 app.use('/quizhero', questionRoutes);
-app.use('/user', userRouters);
+app.use('/users', userRouters);
 
 // Start the server
 app.listen(port, () => {
