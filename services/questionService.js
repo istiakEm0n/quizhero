@@ -1,15 +1,21 @@
-const db = require('../db/db');
+const Question = require('../model/questionModel');
 
-// Service to fetch all questions from the database
 exports.getQuestions = async () => {
-    const query = 'SELECT * FROM questions';
-    const result = await db.query(query);
-    return result.rows; // Return rows to the controller
+    try {
+        const questions = await Question.findAll();
+        return questions; 
+      } catch (error) {
+        console.error('Error fetching questions:', error.message);
+        throw error; 
+      }
 };
 
 exports.getQuestionById = async (id) => {
-    const query = 'SELECT * FROM question WHERE question_id = $1';
-    const values = [id];
-    const result = await db.query(query, values);
-    return result.rows[0];
+    try {
+        const question = await Question.findByPk(id); 
+        return question; 
+      } catch (error) {
+        console.error(`Error fetching question with ID ${id}:`, error.message);
+        throw error; 
+      }
 };
