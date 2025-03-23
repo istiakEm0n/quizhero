@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,  
       },
       question_text: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
       },
       option_a: {
@@ -43,3 +43,4 @@ module.exports = (sequelize, DataTypes) => {
 
   return Question;
 };
+
