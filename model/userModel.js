@@ -3,7 +3,7 @@ const sequelize = require('../db/db'); // Import the Sequelize instance
 
 const User = sequelize.define('users', {
   user_id: {
-    type: DataTypes.UUID, 
+    type: DataTypes.UUID.V4, 
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4, 
   },
