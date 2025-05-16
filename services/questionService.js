@@ -1,6 +1,5 @@
 const { Question } = require("../models"); 
 
-// Service to fetch all questions from the database
 exports.getQuestions = async () => {
   try {
     const questions = await Question.findAll(); 
@@ -23,3 +22,5 @@ exports.getQuestionById = async (question_id) => {
     throw new Error(error.message);
   }
 };
+
+

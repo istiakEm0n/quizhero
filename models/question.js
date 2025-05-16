@@ -1,46 +1,30 @@
-"use strict";
-
 module.exports = (sequelize, DataTypes) => {
   const Question = sequelize.define(
-    "Question", 
+    "Question",
     {
       question_id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        allowNull: false,
-        primaryKey: true,  
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
       },
       question_text: {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      option_a: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      option_b: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      option_c: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      option_d: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       correct_answer: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM("A", "B", "C", "D"),
         allowNull: false,
-      }
+      },
     },
     {
       tableName: "questions",
-      timestamps: false, 
+      timestamps: false,
     }
   );
 
+  Question.associate = (models) => {
+    Question.hasMany(models.UserAnswer, { foreignKey: "question_id" });
+  };
+
   return Question;
 };
-

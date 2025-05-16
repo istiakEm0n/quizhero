@@ -1,6 +1,6 @@
 const express = require('express');
 const questionRoutes = require('./routes/questionRoutes');
-const userRouters = require('./routes/userRoutes')
+const userRouters = require('./routes/userRoutes');
 
 const app = express();
 const port = 3000;
@@ -13,3 +13,4 @@ app.use('/users', userRouters);
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
+
